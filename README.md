@@ -30,3 +30,9 @@ si no se inician o tira error de descarga prueba descargar winget (usualmente pu
 
 
  (version preliminar esta version omiti varias redes sociales si sabes usar yt-dlp sabras que el interceptor de link puede servir para aun mas cosas como descargar m3u8 , mp4 , webm o de diferentes sitios de internet)
+
+
+### SI DESEAS CLONAR EL REPERTORIO EN TU MAQUINA LOCAL (Nesecita GIT)
+```bash
+
+git clone   https://github.com/markbn15/Descargador-de-YouTube.git
