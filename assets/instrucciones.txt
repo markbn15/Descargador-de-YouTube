@@ -1,0 +1,124 @@
+====================================================================
+ MarkOS Downloader Suite - Instrucciones
+====================================================================
+
+A) USO DE LA APLICACION YA COMPILADA (.exe)
+--------------------------------------------------------------------
+1. Ejecuta "MarkOS Downloader Suite.exe".
+2. La ventana se organiza como un asistente de 3 pasos. Arriba tienes
+   las pestanas Interceptor / Descargador / Historial y abajo los botones
+   "Atras" y "Siguiente paso" (o Ctrl+Izquierda / Ctrl+Derecha).
+3. Pestana Interceptor:
+   - Pulsa "Iniciar captura" (o Ctrl+I).
+   - Copia enlaces http:// o https:// desde el navegador.
+   - Cada enlace se guarda en:
+       Desktop\Descargador casero\enlaces.txt
+   - Pulsa ESC (global) o el boton "Detener" para terminar.
+     ESC abre ademas la carpeta de trabajo.
+   - Al detenerse aparece "Captura finalizada": elige MP3, 480p, 720p,
+     1080p o Maxima y pulsa "Descargar ahora" para empezar sin cambiar
+     de pestana. Con "Ahora no" los enlaces quedan guardados.
+   - Al iniciar una nueva captura el archivo enlaces.txt se vacia,
+     igual que en el script original. La app te avisa antes.
+   - "Limpiar enlaces" vacia enlaces.txt y reinicia los contadores.
+     Debe usarse con el interceptor detenido.
+   - Puedes arrastrar URLs o un archivo .txt a la ventana para anadirlos.
+4. Pestana Descargador:
+   - Elige la calidad (MP3, 480p, 720p, 1080p o Maxima).
+   - Pulsa "Descargar" (o Ctrl+D).
+   - "Pausar" (Ctrl+Espacio) detiene la cola al acabar el enlace actual.
+   - "Perfiles" asigna una calidad distinta a cada sitio (por dominio).
+   - Los archivos van a Desktop\Descargador casero\DESCARGAS.
+   - El log muestra el progreso y los errores en tiempo real.
+   - Al terminar, la app pregunta si quieres abrir la carpeta DESCARGAS.
+5. Pestana Historial:
+   - Guarda cada descarga en %APPDATA%\MarkOS_Downloader\historial.db.
+   - Busca, filtra por estado y consulta tamanos y errores.
+   - "Reintentar" vuelve a descargar con la calidad original de la fila.
+   - "Abrir archivo" y "Abrir carpeta" localizan lo descargado.
+   - Si la app se cierra a medias, la cola pendiente se restaura al
+     arrancar en enlaces.txt.
+6. Preferencias (menu ... > Preferencias o Ctrl+,):
+   - Cerrar a la bandeja y seguir capturando en segundo plano.
+   - Iniciar con Windows (minimizado si lo deseas).
+   - Registrar el protocolo markos:// para enviar enlaces desde el
+     navegador: markos://add?url=... / markos://capture.
+   - Buscar actualizaciones de MarkOS automaticamente en cada arranque.
+7. Actualizar dependencias (boton "Actualizar" de la barra superior):
+   - Descarga la ultima version de yt-dlp y, si lo marcas, FFmpeg.
+   - Se guarda en %APPDATA%\MarkOS_Downloader\bin y tiene prioridad
+     sobre los binarios incluidos en el EXE (no hay que recompilar).
+   - "Restaurar incluidos" borra esa copia y vuelve a los del EXE.
+8. Actualizaciones de MarkOS (menu ... > Buscar actualizaciones):
+   - Consulta las releases de GitHub del repositorio del proyecto.
+   - Si hay un .exe nuevo, lo descarga y lo instala al cerrar la app.
+   - Si la release no trae .exe, abre la pagina para descargarla a mano.
+   - "Ignorar esta version" evita avisos de esa etiqueta concreta.
+9. Atajos: Ctrl+I interceptor, Ctrl+D descargar, Ctrl+Espacio pausar,
+   Ctrl+H historial, Ctrl+, preferencias, Ctrl+U actualizaciones,
+   Ctrl+Izquierda/Derecha cambiar de paso, Ctrl+Q salir.
+
+B) REQUISITOS PARA EJECUTAR DESDE EL CODIGO FUENTE
+--------------------------------------------------------------------
+Python 3.11 o 3.12 (NO 3.13, por compatibilidad con PyInstaller).
+
+    pip install -r requirements.txt
+
+Dependencias principales:
+  - yt-dlp      : motor de descargas (se incluye yt-dlp.exe en /bin)
+  - instaloader : opcional, util para Instagram desde otros scripts
+  - pyperclip   : lectura del portapapeles
+  - keyboard    : atajo global ESC
+  - PySide6     : interfaz grafica Qt6
+
+C) DEPENDENCIAS EXTERNAS RECOMENDADAS (una sola vez)
+--------------------------------------------------------------------
+FFmpeg (fusionar audio+video y convertir a MP3):
+
+    winget install Gyan.FFmpeg
+
+Deno (algunos sitios lo usan para resolver firmas de YouTube):
+
+    winget install Denoland.Deno
+
+Extractor de JavaScript @yt-dlp/ejs (requiere Node.js/npm):
+
+    npm install -g @yt-dlp/ejs
+
+Actualizar yt-dlp cuando un sitio deje de funcionar:
+   - Lo mas rapido: boton "Actualizar" dentro de la app (yt-dlp).
+   - Desde el codigo fuente tambien puedes usar:
+       pip install --upgrade yt-dlp
+   - El actualizador nunca modifica el EXE: deja los binarios nuevos en
+     %APPDATA%\MarkOS_Downloader\bin.
+
+Cookies para contenido con inicio de sesion:
+  - Extension recomendada: "Get cookies.txt LOCALLY".
+  - Sin cookies, algunos videos privados o con verificacion fallan.
+
+D) COMPILAR EL .EXE
+--------------------------------------------------------------------
+1. Ejecuta build.bat (crea .venv, instala dependencias y descarga
+   yt-dlp.exe / ffmpeg.exe / ffprobe.exe en bin\).
+2. El resultado queda en:
+       dist\MarkOS Downloader Suite.exe
+3. Para compilar sin FFmpeg (EXE mas pequeno):
+       build.bat noffmpeg
+
+E) SOLUCION DE PROBLEMAS
+--------------------------------------------------------------------
+- "No se pudo leer el portapapeles": otra app lo bloquea; se reintenta.
+- ESC no funciona: ejecuta la app con permisos de administrador.
+- Windows SmartScreen: el EXE no esta firmado; usa "Mas informacion >
+  Ejecutar de todas formas" solo si confias en el archivo.
+- Antivirus: los EXE onefile a veces dan falsos positivos. Agrega una
+  exclusion para la carpeta dist.
+- Descargas que fallan: actualiza yt-dlp y prueba con cookies.
+- Descarga lenta o bloqueada: usa Pausar/Reanudar en el Descargador.
+- Si el EXE no arranca, revisa app.log y prueba a lanzarlo de nuevo;
+  la app no depende del boton de panico ni de procesos externos.
+
+Ruta de configuracion, historial y log:
+    %APPDATA%\MarkOS_Downloader\config.json
+    %APPDATA%\MarkOS_Downloader\historial.db
+    %APPDATA%\MarkOS_Downloader\app.log

@@ -1,0 +1,21 @@
+# ============================================================
+#  MarkOS Downloader Suite - dependencias de EJECUCION (dev)
+#  Python 3.11.x o 3.12.x  (NO 3.13: compatibilidad PyInstaller)
+# ============================================================
+# Interfaz grafica Qt6. Se fija la version para que el .spec y los
+# hooks de PyInstaller se comporten siempre igual entre builds.
+PySide6==6.12.0
+
+# Portapapeles (interceptor) y hooks globales de teclado (ESC).
+pyperclip==1.11.0
+keyboard==0.13.5
+
+# Motor de descargas. En el EXE final se usa el binario bin/yt-dlp.exe,
+# pero se mantiene el paquete Python para poder ejecutar desde el codigo
+# fuente sin tener yt-dlp en el PATH.
+yt-dlp==2026.10.26
+
+# ============================================================
+#  Herramientas de COMPILACION (no se congelan dentro del EXE)
+# ============================================================
+pyinstaller==6.22.3
